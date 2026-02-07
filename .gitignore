@@ -1,0 +1,14 @@
+# Ignore sensitive files
+.env
+.env.local
+
+# Ignore dependencies and system files
+node_modules/
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Ignore database volumes
+postgres_data/
+celerybeat-schedule
