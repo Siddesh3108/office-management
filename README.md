@@ -209,12 +209,9 @@ This project showcases **production engineering excellence** and the ability to:
 Built by **Siddesh3108** - Backend/Full-Stack Engineer with a passion for building systems that scale.
 
 **Ideal for roles requiring:**
-- Senior Backend Engineering
+
 - Full-Stack Development
 - System Design & Architecture
 - SaaS Platform Engineering
-- Technical Leadership
 
----
 
-**Ready to discuss how I can bring this level of engineering excellence to your team?**
