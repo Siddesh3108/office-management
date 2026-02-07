@@ -55,3 +55,16 @@ services:
 
 volumes:
   postgres_data:
+# SECURITY ROTATION - 2026-02-08
+# Overriding previous credentials with new secure ones
+services:
+  db:
+    environment:
+      POSTGRES_PASSWORD: "NewStrongPassword_9982!"
+  backend:
+    environment:
+      DATABASE_URL: "postgresql://user:NewStrongPassword_9982!@db/licensewatch"
+      SECRET_KEY: "prod_secret_88374_xyz_secure"
+  worker:
+    environment:
+      DATABASE_URL: "postgresql://user:NewStrongPassword_9982!@db/licensewatch"
