@@ -1,11 +1,13 @@
-OfficeWatch: Enterprise SaaS Management Platform
-Overview
-OfficeWatch is an internal tooling platform designed to solve the "Shadow IT" problem in growing organizations. It provides a centralized dashboard for tracking software licenses, managing employee requests (Leaves, Procurement), and visualizing burn rates.
+# OfficeWatch: Enterprise SaaS Management Platform
 
-Unlike simple CRUD applications, OfficeWatch is architected for scalability and performance, utilizing asynchronous background workers for data ingestion and a read-through caching strategy to minimize database load.
+## 🚀 Overview
+**OfficeWatch** is an internal tooling platform designed to solve the "Shadow IT" problem in growing organizations. It provides a centralized dashboard for tracking software licenses, managing employee requests (Leaves, Procurement), and visualizing burn rates.
 
-System Architecture
-Code snippet
+Unlike simple CRUD applications, OfficeWatch is architected for **scalability** and **performance**, utilizing asynchronous background workers for data ingestion and a read-through caching strategy to minimize database load.
+
+## 🏗 System Architecture
+
+```mermaid
 graph TD
     Client[React Client] -->|REST API| API[FastAPI Backend]
     
@@ -19,7 +21,7 @@ graph TD
         Broker --> Worker[Celery Worker]
         Worker -->|Ingest Data| DB
     end
-Key Technical Features
+⚡ Key Technical Features
 1. Shadow IT Detection (Event-Driven Architecture)
 Problem: Organizations lack visibility into unmanaged software subscriptions, leading to budget leakage.
 
@@ -41,27 +43,21 @@ Result: Reduced database read operations by approximately 80% for frequent dashb
 Logic: Dynamic state machine handles request lifecycles (Pending -> Approved -> Active Subscription).
 
 Automation: Approved software requests automatically trigger database transactions to provision new assets in the inventory ledger, eliminating manual data entry.
-
-Tech Stack
-Frontend: React, Vite, Tailwind CSS (Responsive SPA with Recharts for analytics)
-
-Backend: FastAPI (Python) - High-performance async REST API
-
-Database: PostgreSQL - Relational data integrity for financial records
-
-Caching: Redis - In-memory data store for session & API caching
-
-Async Queue: Celery - Distributed task queue for long-running jobs
-
-DevOps: Docker Compose - Container orchestration for microservices
-
-How to Run Locally
+🛠 Tech Stack
+Component,Technology,Description
+Frontend,"React, Vite, Tailwind",Responsive SPA with Recharts for analytics
+Backend,FastAPI (Python),High-performance async REST API
+Database,PostgreSQL,Relational data integrity for financial records
+Caching,Redis,In-memory data store for session & API caching
+Async Queue,Celery,Distributed task queue for long-running jobs
+DevOps,Docker Compose,Container orchestration for microservices
+🏃‍♂️ How to Run Locally
 Prerequisites: Docker & Docker Compose.
 
 Clone the Repository
 
 Bash
-git clone https://github.com/Siddesh3108/office-management.git
+git clone [https://github.com/Siddesh3108/office-management.git](https://github.com/Siddesh3108/office-management.git)
 cd office-management
 Start the Microservices
 
@@ -79,13 +75,13 @@ Admin: Sign up with username admin (Role auto-assigned).
 
 Employee: Sign up with any other username to test the requester flow.
 
-Testing
+🧪 Testing
 The project includes automated unit tests for critical authentication flows and API endpoints to ensure regression stability.
 
 Bash
 # Run tests inside the container
 docker-compose exec backend python -m pytest
-Future Improvements
+🔮 Future Improvements
 Kubernetes (K8s) Deployment: Migrate from Docker Compose to Helm charts for production readiness.
 
 SSO Integration: Replace JWT auth with Okta/Auth0 for enterprise compliance.
