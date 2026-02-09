@@ -1,11 +1,11 @@
 # OfficeWatch: Enterprise SaaS Management Platform
 
-## 🎯 Executive Summary
+##  Executive Summary
 **OfficeWatch** is a production-grade SaaS platform addressing the **"Shadow IT" problem**—a critical blind spot affecting 95% of organizations where unmanaged software spending remains invisible. This solution provides complete visibility into software subscriptions, procurement workflows, and IT spend, enabling organizations to reclaim control of their technology budgets.
 
 ---
 
-## 🏆 Business Impact & Results
+##  Business Impact & Results
 
 | Metric | Achievement | Business Value |
 |---|---|---|
@@ -16,7 +16,7 @@
 
 ---
 
-## 🏗 Technical Architecture
+##  Technical Architecture
 
 ### Multi-Tier System Design
 ```
@@ -73,7 +73,7 @@
 
 ---
 
-## 💪 Technical Depth Demonstrated
+##  Technical Depth Demonstrated
 
 ### Backend Engineering
 ✅ **Async/Await Patterns** - Non-blocking I/O with FastAPI  
@@ -122,7 +122,7 @@ Approval Processing:     Manual 2-3 hours → Instant automated
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Docker & Docker Compose
@@ -179,7 +179,7 @@ docker-compose exec backend python -m pytest --cov
 
 ---
 
-## 🔮 Production Roadmap
+##  Production Roadmap (FUTURE SCOPE)
 
 - **Kubernetes Migration** - From Docker Compose to Helm charts for enterprise deployment
 - **SSO Integration** - Okta/Auth0 for enterprise compliance and single sign-on
@@ -190,7 +190,7 @@ docker-compose exec backend python -m pytest --cov
 
 ---
 
-## 👨‍💼 What This Project Demonstrates
+##  What This Project Demonstrates
 
 This project showcases **production engineering excellence** and the ability to:
 
