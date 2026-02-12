@@ -5,7 +5,7 @@ import os
 
 # Use Environment Variable for Production (Render)
 # Fallback to local Docker DB for development
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:NewStrongPassword_9982!@db/licensewatch")
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:dummy_local_password@db/licensewatch")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
