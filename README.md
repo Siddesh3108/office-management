@@ -2,9 +2,8 @@
 
 Lightweight, production-oriented demo of a SaaS procurement & spend monitoring platform.
 
-This repository contains a full-stack prototype built to demonstrate a realistic engineering approach to detecting unmanaged SaaS spending ("Shadow IT"). The codebase includes a React frontend, a FastAPI backend, Celery workers for background processing, Redis for caching and as the Celery broker, and PostgreSQL for persistence.
+This repository contains a full-stack prototype built to demonstrate a realistic engineering approach to detecting unmanaged SaaS spending . The codebase includes a React frontend, a FastAPI backend, Celery workers for background processing, Redis for caching and as the Celery broker, and PostgreSQL for persistence.
 
-Why this README: concise, factual, and aligned to the code in this repo — suitable for technical reviewers and interviewers.
 
 ---
 
@@ -64,7 +63,7 @@ docker-compose exec backend python -m pytest
 - Data persistence: PostgreSQL configured via `docker-compose.yml` and reachable to the backend through `DATABASE_URL` env var.
 - File handling: shared Docker volume `shared_data` used for temporary uploads between backend and worker.
 
-Design choices to note (good talking points in interviews):
+Design choices to note :
 - Use of Celery for reliability and retries when processing large or long-running workloads.
 - Cache invalidation strategy implemented at the handler level to guarantee freshness for key dashboard endpoints.
 - JWT + middleware approach keeps authorization checks centralized and testable.
@@ -121,18 +120,3 @@ Improvements you could mention in interviews:
 - Consider moving Redis to a managed provider and enabling TLS between services.
 
 ---
-
-## Contact / Author
-
-Built by Siddesh3108 — Backend / Full-Stack Engineer.
-
-If you'd like, I can:
-- Add CI with tests and coverage reporting.
-- Expand the developer README with a local dev checklist.
-- Create a compact one-page `HIGHLIGHTS.md` bulleting measurable project outcomes.
-
----
-
-*This README was tailored to the repository contents (FastAPI backend, Celery workers, Redis, PostgreSQL, React frontend). It is structured for technical reviewers and interviewers, highlighting points you can demonstrate during FAANG-style interviews.*
-
-
