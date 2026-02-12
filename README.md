@@ -1,217 +1,138 @@
-# OfficeWatch: Enterprise SaaS Management Platform
+# OfficeWatch
 
-##  Executive Summary
-**OfficeWatch** is a production-grade SaaS platform addressing the **"Shadow IT" problem**—a critical blind spot affecting 95% of organizations where unmanaged software spending remains invisible. This solution provides complete visibility into software subscriptions, procurement workflows, and IT spend, enabling organizations to reclaim control of their technology budgets.
+Lightweight, production-oriented demo of a SaaS procurement & spend monitoring platform.
 
----
+This repository contains a full-stack prototype built to demonstrate a realistic engineering approach to detecting unmanaged SaaS spending ("Shadow IT"). The codebase includes a React frontend, a FastAPI backend, Celery workers for background processing, Redis for caching and as the Celery broker, and PostgreSQL for persistence.
 
-##  Business Impact & Results
-
-| Metric | Achievement | Business Value |
-|---|---|---|
-| **Query Performance** | 80% reduction in database reads | Lower infrastructure costs, faster dashboards |
-| **Approval Automation** | Instant procurement workflow execution | Hours saved per week on manual approvals |
-| **Uptime & Reliability** | Async processing prevents API blocking | 24/7 continuous operation without degradation |
-| **Security Compliance** | Enterprise-grade RBAC with JWT | Zero unauthorized access incidents |
+Why this README: concise, factual, and aligned to the code in this repo — suitable for technical reviewers and interviewers.
 
 ---
 
-##  Technical Architecture
+## Project snapshot
 
-### Multi-Tier System Design
-```
-┌─────────────────────────────────────────────────────┐
-│ React Frontend (Real-time Analytics Dashboard)      │
-└────────────────┬────────────────────────────────────┘
-                 │
-┌────────────────▼────────────────────────────────────┐
-│ FastAPI Backend (Async REST API - Production Ready) │
-└────────────────┬────────────────────────────────────┘
-                 │
-        ┌────────┴──────────┐
-        │                   │
-   ┌────▼────┐      ┌──────▼──────┐
-   │ Redis   │      │ PostgreSQL   │
-   │ Cache   │      │ (ACID)       │
-   │(80%↓)   │      │              │
-   └─────────┘      └──────────────┘
-        
-┌───────────────────────────────────────────────────────┐
-│ Celery Workers (Event-Driven Background Processing)  │
-│ - Shadow IT Detection                                 │
-│ - Async Report Generation                             │
-│ - Automated Workflows                                 │
-└───────────────────────────────────────────────────────┘
-```
+- Frontend: React (Vite) app in `frontend/` serving a dashboard and authentication UI.
+- Backend: FastAPI app in `backend/app/` exposing REST endpoints and OpenAPI docs.
+- Background workers: Celery workers defined in `backend/app/worker.py` and tasks in `backend/app/tasks.py`.
+- Broker & cache: Redis (configured in `docker-compose.yml`).
+- Database: PostgreSQL service (configured in `docker-compose.yml`).
 
-### Core Technical Features
-
-#### 1️⃣ **Shadow IT Detection Engine** (Event-Driven Architecture)
-- **Problem Solved:** Organizations lose $1.5M annually on unmanaged SaaS subscriptions
-- **Solution:** Asynchronous Celery pipeline scans invoices and detects rogue subscriptions without blocking the main API thread
-- **Technical Highlight:** Demonstrates mastery of distributed task processing and event-driven patterns
-- **Stack:** Python, Celery, Redis Message Broker
-
-#### 2️⃣ **Enterprise-Grade RBAC** (Security-First Design)
-- **Problem Solved:** 60% of security breaches involve unauthorized approvals
-- **Solution:** Custom JWT middleware with role-based endpoint protection (Admin vs. Employee scopes)
-- **Technical Highlight:** Implements principle of least privilege with granular permission validation
-- **Implementation:** FastAPI `Depends()` pattern, custom middleware, cryptographic token validation
-
-#### 3️⃣ **High-Performance Caching** (Read-Through Strategy)
-- **Problem Solved:** Dashboard queries were bottlenecking at the database layer
-- **Solution:** Implemented intelligent cache-aside pattern with automatic invalidation
-- **Results:** 80% reduction in database queries, sub-second response times
-- **Technical Highlight:** Write-through validation ensures cache coherency without stale data
-- **Stack:** Redis with expiration policies, cache invalidation logic
-
-#### 4️⃣ **Procurement State Machine** (Workflow Automation)
-- **Problem Solved:** Manual approval workflows introduce errors and delays
-- **Solution:** Declarative state machine manages request lifecycles (Pending → Approved → Active)
-- **Technical Highlight:** Database transactions ensure ACID compliance during state transitions
-- **Result:** Fully automated provisioning eliminates manual data entry
+This README focuses on how to run the project, the core technical choices, and the most important implementation details recruiters/interviewers will look for.
 
 ---
 
-##  Technical Depth Demonstrated
+## Quick start (local, Docker)
 
-### Backend Engineering
-✅ **Async/Await Patterns** - Non-blocking I/O with FastAPI  
-✅ **Distributed Systems** - Celery workers, message brokers, task queues  
-✅ **Database Design** - Relational modeling for financial integrity (PostgreSQL)  
-✅ **Caching Strategies** - Read-through, write-through, cache invalidation  
-✅ **API Design** - RESTful endpoints, Swagger/OpenAPI documentation  
-✅ **Authentication** - JWT tokens, role-based access control  
+Prerequisites: Docker and Docker Compose.
 
-### Systems & DevOps
-✅ **Containerization** - Docker, Docker Compose  
-✅ **Microservices Architecture** - Separation of concerns, scalability  
-✅ **Message Queuing** - Redis broker, task scheduling  
-✅ **Infrastructure as Code** - Container orchestration  
+1. Clone the repo
 
-### Software Quality
-✅ **Test Automation** - Unit tests for authentication flows and critical paths  
-✅ **Regression Testing** - Ensures system stability across releases  
-✅ **Error Handling** - Comprehensive exception management  
-
----
-
-## 🛠 Technology Stack
-
-| Layer | Technology | Why Chosen |
-|---|---|---|
-| **Frontend** | React 18, Vite, Tailwind CSS | Lightning-fast bundling, utility-first styling, real-time dashboards |
-| **Backend API** | FastAPI (Python) | Async-native, auto-generated API docs, type-safe endpoints |
-| **Database** | PostgreSQL | ACID guarantees, complex queries, data integrity |
-| **Caching** | Redis | Sub-millisecond access, distributed cache, session store |
-| **Task Queue** | Celery + Redis | Horizontal scaling, retry logic, monitoring |
-| **DevOps** | Docker Compose | Reproducible environments, microservices orchestration |
-| **Analytics** | Recharts (React) | Interactive dashboards, real-time data visualization |
-
----
-
-## 📊 Performance Metrics
-
-```
-Dashboard Load Time:     450ms → 85ms (5.3x faster)
-Database Query Count:    100 req/s → 20 req/s (80% reduction)
-API Response Time:       250ms → 45ms (avg)
-Cache Hit Rate:          92% for dashboard reads
-Approval Processing:     Manual 2-3 hours → Instant automated
-```
-
----
-
-##  Getting Started
-
-### Prerequisites
-- Docker & Docker Compose
-
-### Quick Start
 ```bash
-# Clone repository
 git clone https://github.com/Siddesh3108/office-management.git
 cd office-management
-
-# Start all services
-docker-compose up --build
-
-# Access the application
-Frontend:     http://localhost:3000
-API Docs:     http://localhost:8000/docs
-Health Check: http://localhost:8000/health
 ```
 
-### Default Credentials
-- **Admin Role:** Sign up with username `admin`
-- **Employee Role:** Sign up with any other username
+2. Build and run services
 
-### Running Tests
 ```bash
-# Execute automated test suite
-docker-compose exec backend python -m pytest
+docker-compose up --build
+```
 
-# With coverage report
-docker-compose exec backend python -m pytest --cov
+Services started by default:
+- Frontend: http://localhost:3000
+- Backend (FastAPI + docs): http://localhost:8000/docs
+
+3. API health check
+
+```bash
+curl http://localhost:8000/health
+```
+
+4. Running tests (inside the backend container)
+
+```bash
+docker-compose exec backend python -m pytest
 ```
 
 ---
 
-## 🧪 Quality Assurance
+## Architecture & implementation highlights
 
-- **Unit Tests** - Authentication flows, API endpoints, business logic
-- **Integration Tests** - Database transactions, cache coherency
-- **Regression Tests** - Ensures stability across releases
-- **Code Coverage** - Critical paths fully covered
-- **Security Testing** - RBAC validation, permission enforcement
+- FastAPI: asynchronous endpoints with dependency-injection patterns for auth and permissions.
+- JWT-based auth: token creation and validation implemented using `python-jose` (see `backend/app/auth.py` and `backend/app/middleware.py`).
+- Caching: Redis used for read-through caching in `backend/app/main.py` to reduce DB load for dashboard routes.
+- Background processing: Celery workers configured in `backend/app/worker.py` and used to offload heavy tasks (example: `scan_invoice` task in `backend/app/tasks.py`).
+- Data persistence: PostgreSQL configured via `docker-compose.yml` and reachable to the backend through `DATABASE_URL` env var.
+- File handling: shared Docker volume `shared_data` used for temporary uploads between backend and worker.
 
----
-
-## 🎓 Engineering Principles Applied
-
-1. **SOLID Design** - Single Responsibility, Dependency Injection
-2. **DRY (Don't Repeat Yourself)** - Reusable components, middleware
-3. **Separation of Concerns** - Frontend/Backend/Database decoupled
-4. **Scalability First** - Async processing, caching, database optimization
-5. **Security by Design** - JWT auth, RBAC, least privilege principle
-6. **Testing Culture** - Automated tests, regression prevention
-7. **Documentation** - Auto-generated API docs, clear README
+Design choices to note (good talking points in interviews):
+- Use of Celery for reliability and retries when processing large or long-running workloads.
+- Cache invalidation strategy implemented at the handler level to guarantee freshness for key dashboard endpoints.
+- JWT + middleware approach keeps authorization checks centralized and testable.
 
 ---
 
-##  Production Roadmap (FUTURE SCOPE)
+## How to run locally (dev loop)
 
-- **Kubernetes Migration** - From Docker Compose to Helm charts for enterprise deployment
-- **SSO Integration** - Okta/Auth0 for enterprise compliance and single sign-on
-- **Real-time Notifications** - Slack/Teams integration for instant approval alerts
-- **Advanced Analytics** - ML-based spend prediction and anomaly detection
-- **Multi-tenancy** - Support for distributed team environments
-- **Audit Logging** - Compliance-ready audit trails for all operations
+If you prefer to run services locally without Docker:
 
----
+- Create a Python venv and install `backend/requirements.txt`.
+- Ensure a running Postgres instance and Redis instance and set `DATABASE_URL`, `CELERY_BROKER_URL`, `CELERY_RESULT_BACKEND`, and `SECRET_KEY` as environment variables.
+- Start the backend with Uvicorn:
 
-##  What This Project Demonstrates
+```bash
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
 
-This project showcases **production engineering excellence** and the ability to:
+- Start a worker:
 
-- 🏗️ **Design scalable systems** that handle high-volume requests
-- 🔐 **Implement security best practices** with enterprise-grade access control
-- ⚡ **Optimize performance** through intelligent caching and async processing
-- 📊 **Solve real business problems** with measurable business impact
-- 🧪 **Write quality, maintainable code** with comprehensive testing
-- 🚀 **Deploy and containerize** applications for production environments
-- 📈 **Think strategically** about trade-offs and architectural decisions
+```bash
+celery -A app.worker.celery_app worker --loglevel=info
+```
 
 ---
 
-## 📬 Let's Connect
+## Files you should look at for technical review
 
-Built by **Siddesh3108** - Backend/Full-Stack Engineer with a passion for building systems that scale.
+- `backend/app/main.py` — API routes, Redis caching logic, file upload flows.
+- `backend/app/auth.py` & `backend/app/middleware.py` — JWT creation and middleware enforcement.
+- `backend/app/worker.py` — Celery app configuration and broker/back-end wiring.
+- `backend/app/tasks.py` — Example background tasks (invoice scanning pipeline).
+- `docker-compose.yml` — Local development orchestration and service wiring.
 
-**Ideal for roles requiring:**
+When interviewing, be prepared to explain trade-offs for each choice (e.g., Celery vs. other queue systems, Redis eviction policies, token expiry/rotation strategy).
 
-- Full-Stack Development
-- System Design & Architecture
-- SaaS Platform Engineering
+---
+
+## Tests & quality
+
+- A small test suite exists under `backend/tests` using `pytest` and `fastapi.testclient`.
+- Aim: unit tests for auth flows + integration smoke tests for key endpoints.
+
+Improvements you could mention in interviews:
+- Add CI (GitHub Actions) to run linting and pytest.
+- Add contract tests for frontend-backend integration.
+
+---
+
+## Security & production notes
+
+- Never commit secrets; the repo uses environment variables (see `docker-compose.yml`).
+- In production, rotate `SECRET_KEY` regularly and use an env-secret manager (Vault, AWS Secrets Manager).
+- Consider moving Redis to a managed provider and enabling TLS between services.
+
+---
+
+## Contact / Author
+
+Built by Siddesh3108 — Backend / Full-Stack Engineer.
+
+If you'd like, I can:
+- Add CI with tests and coverage reporting.
+- Expand the developer README with a local dev checklist.
+- Create a compact one-page `HIGHLIGHTS.md` bulleting measurable project outcomes.
+
+---
+
+*This README was tailored to the repository contents (FastAPI backend, Celery workers, Redis, PostgreSQL, React frontend). It is structured for technical reviewers and interviewers, highlighting points you can demonstrate during FAANG-style interviews.*
 
 
