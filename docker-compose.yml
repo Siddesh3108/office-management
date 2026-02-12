@@ -18,6 +18,7 @@ services:
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - ./backend:/app
+      - shared_data:/app/temp_uploads  # <--- SHARED STORAGE
     ports:
       - "8000:8000"
     depends_on:
@@ -27,13 +28,14 @@ services:
       - DATABASE_URL=postgresql://user:password@db/licensewatch
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-      - SECRET_KEY=dev_secret
+      - SECRET_KEY=prod_secret_88374_xyz_secure
 
   worker:
     build: ./backend
     command: celery -A app.worker.celery_app worker --loglevel=info
     volumes:
       - ./backend:/app
+      - shared_data:/app/temp_uploads  # <--- SHARED STORAGE
     depends_on:
       - backend
       - redis
@@ -55,16 +57,4 @@ services:
 
 volumes:
   postgres_data:
-# SECURITY ROTATION - 2026-02-08
-# Overriding previous credentials with new secure ones
-services:
-  db:
-    environment:
-      POSTGRES_PASSWORD: "NewStrongPassword_9982!"
-  backend:
-    environment:
-      DATABASE_URL: "postgresql://user:NewStrongPassword_9982!@db/licensewatch"
-      SECRET_KEY: "prod_secret_88374_xyz_secure"
-  worker:
-    environment:
-      DATABASE_URL: "postgresql://user:NewStrongPassword_9982!@db/licensewatch"
+  shared_data:  # <--- Define the volume here
